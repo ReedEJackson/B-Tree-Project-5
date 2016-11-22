@@ -15,10 +15,19 @@ namespace Project5
 
             //Main Menu
 
-            List<int> tempList = new List<int>();
+            //Set arity and create B-Tree
+            //User set arity
+            int arity = 3;
+            BTree userTree = new BTree(arity);
+
+            bool getNextValue = false;
             for (int i = 1; i < 20; i++) //20 = 500
             {
-                tempList.Add(rand.Next(51)); //0 - 9999
+                while (getNextValue == false)
+                {
+                    getNextValue = userTree.AddValue(rand.Next(100)); //0 - 9999
+                }
+                getNextValue = false;
             }
         }
     }
