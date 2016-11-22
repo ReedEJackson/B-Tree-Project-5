@@ -34,9 +34,15 @@ namespace Project5
 
             //Position temp to the smallest place it 
             //can go
-            for (j = index; (j > 0 && temp < Items[j - 1]); j--)
+            for (j = index; (j > 0 && temp <= Items[j - 1]); j--)
             {
                 Items[j] = Items[j - 1];
+
+                //This prevents duplicates from being added
+                if (Items[j] == Items[index])
+                {
+                    return INSERT.DUPLICATE;
+                }
             }
 
             //Insert temp to the selected position
@@ -47,31 +53,27 @@ namespace Project5
             {
                 return INSERT.NEEDSPLIT;
             }
-            else if (DuplicatesExist(index, temp))
-            {
-                return INSERT.DUPLICATE;
-            }
             else
             {
                 return INSERT.SUCCESS;
             }
         }
 
-        private bool DuplicatesExist(int index, int value)
-        {
-            for (int i = 0; i < Items.Count; i++)
-            {
-                if (i == index)
-                {
-                    //Do Nothing since the values are the same
-                }
-                else if (Items[i] == Items[index])
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        //private bool DuplicatesExist(int index)
+        //{
+        //    for (int i = 0; i < Items.Count; i++)
+        //    {
+        //        if (i == index)
+        //        {
+        //            //Do Nothing since the values are the same
+        //        }
+        //        else if (Items[i] == Items[index])
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
         #endregion
     }
