@@ -26,27 +26,37 @@ namespace Project5
 
         #region Insertion Methods
 
-        public INSERT Insert(int index)
+        public INSERT Insert(int value)
         {
             //Initial Values
-            int temp = Items[index];
-            int j;
+            int i;
+            Items.Add(value);
 
             //Position temp to the smallest place it 
             //can go
-            for (j = index; (j > 0 && temp <= Items[j - 1]); j--)
+            for (i = Items.Count - 1; (i > 0 && value <= Items[i - 1]); i--)
             {
-                Items[j] = Items[j - 1];
-
                 //This prevents duplicates from being added
-                if (Items[j] == Items[index])
+                if (Items[i - 1] == value)
                 {
+                    //Undo changes to Items List
+                    for (int j = i; j < Items.Count - 2; j++)
+                    {
+                        Items[i + 1] = Items[i + 2];
+                    }
+
+                    //Remove top value
+                    Items.RemoveAt(Items.Count - 1);
                     return INSERT.DUPLICATE;
+                }
+                else
+                {
+                    Items[i] = Items[i - 1];
                 }
             }
 
-            //Insert temp to the selected position
-            Items[j] = temp;
+            //Insert the value to the selected position
+            Items[i] = value;
 
             //Set return message
             if (Items.Count > NodeSize)
