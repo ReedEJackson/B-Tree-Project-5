@@ -27,24 +27,26 @@ namespace Project5
         public Node()
         {
             NodeSize = 5;
-
-            for (int i = 0; i < NodeSize; i++)
-            {
-                Items.Add(rand.Next(51)); //0 - 9999
-            }
-            InsertionSort(Items);
         }
 
         public Node(int nodeSize)
         {
             NodeSize = nodeSize;
-
-            for (int i = 0; i < NodeSize; i++)
-            {
-                Items.Add(rand.Next(51)); //0 - 9999
-            }
-            InsertionSort(Items);
         }
+
+        #endregion
+
+        #region Sorting Methods
+
+        #region Start Sort
+
+        public void RunSort()
+        {
+            if (NodeSize <= 20)
+                InsertionSort();
+            else
+                ShellSort();
+        } 
 
         #endregion
 
@@ -54,29 +56,54 @@ namespace Project5
         /// Used to sort a list of int values using
         /// Insertion Sort
         /// </summary>
-        /// <param name="list">The list.</param>
-        /// <returns>sorted int list</returns>
-        private static List<int> InsertionSort(List<int> list)
+        private void InsertionSort()
         {
             int temp, j;
-            for (int i = 1; i < list.Count; i++)
+            for (int i = 1; i < Items.Count; i++)
             {
                 //Value to insert
-                temp = list[i];
+                temp = Items[i];
 
                 //Position temp to the smallest place it 
                 //can go
-                for (j = i; (j > 0 && temp < list[j - 1]); j--)
+                for (j = i; (j > 0 && temp < Items[j - 1]); j--)
                 {
-                    list[j] = list[j - 1];
+                    Items[j] = Items[j - 1];
                 }
 
                 //Insert temp to the selected position
-                list[j] = temp;
+                Items[j] = temp;
             }
-            return list;
         }
 
+        #endregion
+
+        #region Shell Sort
+
+        /// <summary>
+        /// Used to sort a list of int values using
+        /// Shell Sort
+        /// </summary>
+        private void ShellSort()
+        {
+            for (int gap = this.Items.Count / 2; gap > 0;
+                 gap = (gap == 2 ? 1 : (int)(gap / 2.2)))
+            {
+                int temp, j;
+                for (int i = gap; i < this.Items.Count; i++)
+                {
+                    temp = Items[i];
+                    for (j = i; j >= gap && temp < Items[j - gap]; j -= gap)
+                    {
+                        Items[j] = Items[j - gap];
+                    }
+                    Items[j] = temp;
+                }
+            }
+        }
+
+        #endregion 
+        
         #endregion
 
         #region ToString
