@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace Project5
 {
@@ -18,7 +19,9 @@ namespace Project5
 
         public int NodeSize { get; set; }
 
-        public Node Root { get; set; }
+        public Index Root { get; set; }
+
+        public List<Index> IndexList { get; set; }
 
         public Stack<Node> MainStack { get; set; }
 
@@ -31,6 +34,8 @@ namespace Project5
         public BTree(int arity)
         {
             NodeSize = arity;
+            Root = new Index();
+            IndexList = new List<Index>();
 
             //Initialize counts
             NodeCount = 0;
@@ -38,14 +43,57 @@ namespace Project5
             LeafCount = 0;
         }
 
-        public bool AddValue(int value)
+        public bool AddedValue(int value)
         {
+            #region Initialize first value and Root
+
             if (NodeCount == 0)
             {
-                Root = new Node(NodeSize);
+                Index FirstIndex = new Index(NodeSize);
+                Leaf FirstLeaf = new Leaf(NodeSize);
+
+                //Add value to the first Index and Leaf
+                FirstIndex.Items.Add(value);
+                FirstLeaf.Items.Add(value);
+
+                //Reference first Leaf
+                FirstIndex.LeafList.Add(FirstLeaf);
+
+                //Add index to IndexList and Root
+                Root = FirstIndex;
+                IndexList.Add(Root);
+
+                //Increment Counts
                 NodeCount++;
+                IndexCount++;
+                LeafCount++;
+                return true;
+            }
+
+            #endregion
+
+            else
+            {
+                //Find Leaf to insert value
+                Leaf FilledLeaf = FindLeaf(value);
             }
             return true;
+
+            //WriteLine($"FirstIndex:\n{FirstIndex}\n" + 
+            //          $"FirstLeaf:\n{FirstLeaf}\n" + 
+            //          $"Root:\n{Root}\n");
+        }
+
+        #endregion
+
+        #region Find Leaf
+
+        public Leaf FindLeaf(int value)
+        {
+            if (value < Root.Items)
+            {
+
+            }
         }
 
         #endregion

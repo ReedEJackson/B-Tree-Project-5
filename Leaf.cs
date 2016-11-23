@@ -10,16 +10,11 @@ namespace Project5
     {
         #region Constructors
 
-        public Leaf()
-        {
-            NodeSize = base.NodeSize;
-            Items = base.Items;
-        }
+        public Leaf() { }
 
         public Leaf(int nodeSize)
         {
             NodeSize = nodeSize;
-            Items = base.Items;
         }
 
         #endregion
@@ -68,22 +63,6 @@ namespace Project5
                 return INSERT.SUCCESS;
             }
         }
-
-        //private bool DuplicatesExist(int index)
-        //{
-        //    for (int i = 0; i < Items.Count; i++)
-        //    {
-        //        if (i == index)
-        //        {
-        //            //Do Nothing since the values are the same
-        //        }
-        //        else if (Items[i] == Items[index])
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
 
         #endregion
     }

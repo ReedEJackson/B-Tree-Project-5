@@ -26,12 +26,14 @@ namespace Project5
 
         public Node()
         {
-            NodeSize = 5;
+            NodeSize = 3;
+            Items = new List<int>(3);
         }
 
         public Node(int nodeSize)
         {
             NodeSize = nodeSize;
+            Items = new List<int>(NodeSize);
         }
 
         #endregion

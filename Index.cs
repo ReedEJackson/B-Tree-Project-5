@@ -10,7 +10,9 @@ namespace Project5
     {
         #region Properties
 
-        public List<Node> IndexList { get; set; }
+        public List<Index> IndexList { get; set; }
+
+        public List<Leaf> LeafList { get; set; }
 
         #endregion
 
@@ -18,22 +20,27 @@ namespace Project5
 
         public Index()
         {
-            NodeSize = base.NodeSize;
-            Items = base.Items;
+            IndexList = new List<Index>(base.NodeSize);
+            LeafList = new List<Leaf>(base.NodeSize);
         }
 
         public Index(int nodeSize)
         {
             NodeSize = nodeSize;
-            Items = base.Items;
+            IndexList = new List<Index>(NodeSize);
+            LeafList = new List<Leaf>(NodeSize);
         }
 
         #endregion
 
         #region Insertion Methods
 
-        public INSERT Insert(int value)
+        public INSERT Insert(int value, Node node)
         {
+            //Add code for node
+            //node.Items.Add(value);
+            //NodeList.Add(node);
+
             //Initial Values
             int i;
             Items.Add(value);
