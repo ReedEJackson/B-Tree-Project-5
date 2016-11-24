@@ -31,6 +31,13 @@ namespace Project5
             LeafList = new List<Leaf>(NodeSize);
         }
 
+        public Index(Index CopyIndex)
+        {
+            NodeSize = CopyIndex.NodeSize;
+            IndexList = CopyIndex.IndexList;
+            LeafList = CopyIndex.LeafList;
+        }
+
         #endregion
 
         #region Insertion Methods
@@ -45,7 +52,7 @@ namespace Project5
             int i;
             Items.Add(value);
 
-            //Position temp to the smallest place it 
+            //Position value to the smallest place it 
             //can go
             for (i = Items.Count - 1; (i > 0 && value <= Items[i - 1]); i--)
             {

@@ -60,7 +60,7 @@ namespace Project5
                 FirstIndex.LeafList.Add(FirstLeaf);
 
                 //Add index to IndexList and Root
-                Root = FirstIndex;
+                Root = new Index(FirstIndex);
                 IndexList.Add(Root);
 
                 //Increment Counts
@@ -90,10 +90,26 @@ namespace Project5
 
         public Leaf FindLeaf(int value)
         {
-            if (value < Root.Items)
-            {
+            //Initialize starting point
+            Index SearchIndex = new Index(Root);
 
+            //Find Deepest Index
+            bool foundLeaf = false;
+            while (foundLeaf == true)
+            {
+                if (SearchIndex.IndexList.Count == 0)
+                {
+                    foundLeaf = true;
+                }
+                else
+                {
+
+                }
             }
+
+            //Find Leaf
+
+            return new Leaf(NodeSize);
         }
 
         #endregion
