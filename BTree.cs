@@ -25,8 +25,6 @@ namespace Project5
 
         public Stack<Index> MainStack { get; set; }
 
-        public bool Trace { get; set; }
-
         #endregion
 
         #region Constructors
@@ -357,5 +355,10 @@ namespace Project5
         }
 
         #endregion
+
+        //Need Display Method
+        //...Search For Node method
+        //...Need Stats Method
+        //...Need to implement counts
     }
 }
