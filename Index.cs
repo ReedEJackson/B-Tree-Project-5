@@ -38,74 +38,35 @@ namespace Project5
             NodeSize = CopyIndex.NodeSize;
             IndexList = CopyIndex.IndexList;
             LeafList = CopyIndex.LeafList;
+            Items = new List<int>(CopyIndex.Items);
         }
 
         #endregion
 
         #region Insertion Methods
 
-        public INSERT Insert(int value, Node node)
+        public void Insert(int value, Index LeftIndex, Index RightIndex)
         {
-            //Add code for node
-            //node.Items.Add(value);
-            //NodeList.Add(node);
-
             //Initial Values
             int i;
             Items.Add(value);
 
-            //Position value to the smallest place it 
+            //Position temp to the smallest place it 
             //can go
             for (i = Items.Count - 1; (i > 0 && value <= Items[i - 1]); i--)
             {
-                //This prevents duplicates from being added
-                if (Items[i - 1] == value)
-                {
-                    //Undo changes to Items List
-                    for (int j = i; j < Items.Count - 2; j++)
-                    {
-                        Items[i + 1] = Items[i + 2];
-                    }
-
-                    //Remove top value
-                    Items.RemoveAt(Items.Count - 1);
-                    return INSERT.DUPLICATE;
-                }
-                else
-                {
-                    Items[i] = Items[i - 1];
-                }
+                Items[i] = Items[i - 1];
             }
 
             //Insert the value to the selected position
             Items[i] = value;
 
-            //Set return message
-            if (Items.Count > NodeSize)
-            {
-                return INSERT.NEEDSPLIT;
-            }
-            else
-            {
-                return INSERT.SUCCESS;
-            }
+            //Set Index References
+            IndexList.RemoveAt(i - 1);
+            IndexList.RemoveAt(i);
+            IndexList.Insert(i - 1, LeftIndex);
+            IndexList.Insert(i, RightIndex);
         }
-
-        //private bool DuplicatesExist(int index)
-        //{
-        //    for (int i = 0; i < Items.Count; i++)
-        //    {
-        //        if (i == index)
-        //        {
-        //            //Do Nothing since the values are the same
-        //        }
-        //        else if (Items[i] == Items[index])
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
 
         #endregion
 

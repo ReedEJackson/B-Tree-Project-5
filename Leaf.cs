@@ -17,50 +17,65 @@ namespace Project5
             NodeSize = nodeSize;
         }
 
+        public Leaf(Leaf CopyLeaf)
+        {
+            NodeSize = CopyLeaf.NodeSize;
+            Items = new List<int>(CopyLeaf.Items);
+        }
+
         #endregion
 
         #region Insertion Methods
 
         public INSERT Insert(int value)
         {
-            //Initial Values
-            int i;
-            Items.Add(value);
-
-            //Position temp to the smallest place it 
-            //can go
-            for (i = Items.Count - 1; (i > 0 && value <= Items[i - 1]); i--)
+            if (Items.Count == 0)
             {
-                //This prevents duplicates from being added
-                if (Items[i - 1] == value)
-                {
-                    //Undo changes to Items List
-                    for (int j = i; j < Items.Count - 2; j++)
-                    {
-                        Items[i + 1] = Items[i + 2];
-                    }
-
-                    //Remove top value
-                    Items.RemoveAt(Items.Count - 1);
-                    return INSERT.DUPLICATE;
-                }
-                else
-                {
-                    Items[i] = Items[i - 1];
-                }
-            }
-
-            //Insert the value to the selected position
-            Items[i] = value;
-
-            //Set return message
-            if (Items.Count > NodeSize)
-            {
-                return INSERT.NEEDSPLIT;
+                Items.Add(value);
+                return INSERT.SUCCESS;
             }
             else
             {
-                return INSERT.SUCCESS;
+                //Initial Values
+                int i;
+                Items.Add(value);
+
+                //Position temp to the smallest place it 
+                //can go
+                for (i = Items.Count - 1; (i > 0 && value <= Items[i - 1]); i--)
+                {
+                    //This prevents duplicates from being added
+                    if (Items[i - 1] == value)
+                    {
+                        //Undo changes to Items List
+                        for (int j = i; j < Items.Count - 2; j++)
+                        {
+                            Items[i + 1] = Items[i + 2];
+                        }
+
+                        //Remove top value
+                        Items.RemoveAt(Items.Count - 1);
+                        return INSERT.DUPLICATE;
+                    }
+                    else
+                    {
+                        Items[i] = Items[i - 1];
+                    }
+                }
+
+
+                //Insert the value to the selected position
+                Items[i] = value;
+
+                //Set return message
+                if (Items.Count > NodeSize)
+                {
+                    return INSERT.NEEDSPLIT;
+                }
+                else
+                {
+                    return INSERT.SUCCESS;
+                }
             }
         }
 
