@@ -1,4 +1,14 @@
-﻿using System;
+﻿//	Project:		Project 5 - BTree
+//	File Name:		BTree.cs
+//	Description:	
+//	Course:			CSCI 2210-001 - Data Structures
+//	Authors:		Reed Jackson, reedejackson@gmail.com, jacksonre@etsu.edu
+//                  Other Author
+//                  Other Author
+//	Created:		11/23/2016
+//	Copyright:		Reed Jackson, Author, Author, 2016
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -109,7 +119,7 @@ namespace Project5
 
             //Find Deepest Index
             bool foundLeaf = false;
-            while (foundLeaf == true)
+            while (foundLeaf == false)
             {
                 //Mark Index in MainStack
                 MainStack.Push(SearchIndex);
@@ -136,7 +146,7 @@ namespace Project5
             }
 
             //Return last leaf in index
-            return SearchIndex.LeafList[NodeSize];
+            return SearchIndex.LeafList[SearchIndex.LeafList.Count - 1];
         }
 
         public Index FindIndex(Index SearchIndex, int value)
@@ -165,15 +175,21 @@ namespace Project5
             Leaf NewLeaf = new Leaf(NodeSize);
             int half = FullLeaf.Items.Count / 2;
             int newIndexValue = FullLeaf.Items[half];
+            int FullLeafCount = FullLeaf.Items.Count;
 
             for (int i = half; i < FullLeaf.Items.Count; i++)
             {
                 //Add the values to another Leaf
-                NewLeaf.Items.Add(i);
-
-                //Then remove them from the FullLeaf
-                FullLeaf.Items.RemoveAt(i);
+                NewLeaf.Items.Add(FullLeaf.Items[i]);
             }
+
+            for (int i = half; i < FullLeafCount; i++)
+            {
+                //Then remove them from the FullLeaf
+                FullLeaf.Items.RemoveAt(half);
+            }
+
+            Index Temp = new Index(MainStack.Peek());
 
             MainStack.Peek().Items.Add(newIndexValue);
             MainStack.Peek().LeafList.Add(NewLeaf);
@@ -357,8 +373,19 @@ namespace Project5
         #endregion
 
         //Need Display Method
-        //...Search For Node method
+        //...Search For Node method(Base off FindLeaf Method)
         //...Need Stats Method
         //...Need to implement counts
+        
+        //Idea for display: put tree sideways
+        //       Root
+        //Level: 0          1           2           3
+        //              
+        //                              *, 150, 300
+        //                  *, 150
+        //       *, 100
+        //                  *, 75
+        //                              
+        //Or Put top down   
     }
 }
