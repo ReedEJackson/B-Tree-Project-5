@@ -22,6 +22,7 @@ namespace Project5
         {
             IndexList = new List<Index>(base.NodeSize);
             LeafList = new List<Leaf>(base.NodeSize);
+            Items.Add(-1);
         }
 
         public Index(int nodeSize)
@@ -29,6 +30,7 @@ namespace Project5
             NodeSize = nodeSize;
             IndexList = new List<Index>(NodeSize);
             LeafList = new List<Leaf>(NodeSize);
+            Items.Add(-1);
         }
 
         public Index(Index CopyIndex)
