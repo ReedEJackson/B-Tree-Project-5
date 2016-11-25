@@ -24,6 +24,8 @@ namespace Project5
 
         public List<Leaf> LeafList { get; set; }
 
+        public int IndexLevel { get; set; }
+
         #endregion
 
         #region Constructors
@@ -80,73 +82,30 @@ namespace Project5
 
         #endregion
 
-        #region Sorting Methods
+        #region ToString
 
-        #region Start Sort
-
-        public void RunSort()
+        public override string ToString()
         {
-            if (NodeSize <= 20)
-                InsertionSort();
-            else
-                ShellSort();
-        }
-
-        #endregion
-
-        #region Insertion Sort
-
-        /// <summary>
-        /// Used to sort a list of int values using
-        /// Insertion Sort
-        /// </summary>
-        private void InsertionSort()
-        {
-            int temp, j;
-            for (int i = 1; i < Items.Count; i++)
+            string result = base.ToString();
+            result += $"\nIndex Level: {IndexLevel}";
+            if (IndexList.Count > 0)
             {
-                //Value to insert
-                temp = Items[i];
-
-                //Position temp to the smallest place it 
-                //can go
-                for (j = i; (j > 0 && temp < Items[j - 1]); j--)
+                result += $"\nIndexes Pointed to:\n\t";
+                for (int i = 0; i < IndexList.Count; i++)
                 {
-                    Items[j] = Items[j - 1];
-                }
-
-                //Insert temp to the selected position
-                Items[j] = temp;
-            }
-        }
-
-        #endregion
-
-        #region Shell Sort
-
-        /// <summary>
-        /// Used to sort a list of int values using
-        /// Shell Sort
-        /// </summary>
-        private void ShellSort()
-        {
-            for (int gap = this.Items.Count / 2; gap > 0;
-                 gap = (gap == 2 ? 1 : (int)(gap / 2.2)))
-            {
-                int temp, j;
-                for (int i = gap; i < this.Items.Count; i++)
-                {
-                    temp = Items[i];
-                    for (j = i; j >= gap && temp < Items[j - gap]; j -= gap)
-                    {
-                        Items[j] = Items[j - gap];
-                    }
-                    Items[j] = temp;
+                    result += $"{IndexList[i] }";
                 }
             }
+            if (LeafList.Count > 0)
+            {
+                result += $"\nLeaves Pointed to:\n\t";
+                for (int i = 0; i < LeafList.Count; i++)
+                {
+                    result += $"{LeafList[i] }";
+                }
+            }
+            return result;
         }
-
-        #endregion
 
         #endregion
     }

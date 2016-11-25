@@ -33,7 +33,15 @@ namespace Project5
 
         public List<Index> TreeIndexs { get; set; }
 
+        public List<Leaf> TreeLeaves { get; set; }
+
         public Stack<Index> MainStack { get; set; }
+
+        public Stack<Index> PreOrderStack { get; set; }
+
+        public List<string> PreOrder { get; set; }
+
+        public int PreOrderCount { get; set; }
 
         #endregion
 
@@ -45,12 +53,18 @@ namespace Project5
             Root = new Index();
             TreeIndexs = new List<Index>();
             MainStack = new Stack<Index>();
+            PreOrderStack = new Stack<Index>();
 
             //Initialize counts
             NodeCount = 0;
             IndexCount = 0;
             LeafCount = 0;
+            PreOrderCount = 0;
         }
+
+        #endregion
+
+        #region Add a value to the Tree
 
         public bool AddedValue(int value)
         {
@@ -69,9 +83,14 @@ namespace Project5
                 FirstIndex.LeafList.Add(new Leaf(NodeSize));
                 FirstIndex.LeafList.Add(FirstLeaf);
 
+                //Set IndexLevel
+                FirstIndex.IndexLevel = 0;
+
                 //Add index to IndexList and Root
                 Root = new Index(FirstIndex);
                 TreeIndexs.Add(Root);
+                TreeLeaves.Add(FirstIndex.LeafList[0]);
+                TreeLeaves.Add(FirstIndex.LeafList[1]);
 
                 //Increment Counts
                 NodeCount++;
@@ -81,6 +100,8 @@ namespace Project5
             }
 
             #endregion
+
+            #region Attempt to put value into a Leaf
 
             else
             {
@@ -92,7 +113,7 @@ namespace Project5
                     //Do nothing since you need a unique new value
                     return false;
                 }
-                else if(response == INSERT.NEEDSPLIT)
+                else if (response == INSERT.NEEDSPLIT)
                 {
                     //Split Leaf and Indexes if needed
                     SplitLeaf(LeafToFill);
@@ -103,11 +124,13 @@ namespace Project5
                     //Success!
                     return true;
                 }
-            }
+            } 
+
+            #endregion
         }
 
         #endregion
-
+        
         #region Finding Nodes on Tree Methods
 
         public Leaf FindLeaf(int value)
@@ -287,6 +310,9 @@ namespace Project5
 
                     #endregion
 
+                    //Set Right Index Level
+                    RightIndex.IndexLevel = CurrentIndex.IndexLevel;
+
                     //Dispose values
                     int disposeCount = CurrentIndex.Items.Count;
                     for (int i = half; i < disposeCount; i++)
@@ -301,7 +327,9 @@ namespace Project5
                     CenterIndex.IndexList.Add(LeftIndex);
                     CenterIndex.IndexList.Add(RightIndex);
 
-                    //Save new Root
+                    //Set Index Levels and add CenterIndex
+                    IncrementAllTreeLevels();
+                    CenterIndex.IndexLevel = 0;
                     Root = new Index(CenterIndex);
                 }
 
@@ -348,6 +376,9 @@ namespace Project5
 
                     #endregion
 
+                    //Set Right Index Level
+                    RightIndex.IndexLevel = CurrentIndex.IndexLevel;
+
                     //Dispose values
                     int disposeCount = CurrentIndex.Items.Count;
                     for (int i = half; i < disposeCount; i++)
@@ -370,13 +401,60 @@ namespace Project5
             }
         }
 
+        public void IncrementAllTreeLevels()
+        {
+            for (int i = 0; i < TreeIndexs.Count; i++)
+            {
+                TreeIndexs[i].IndexLevel++;
+            }
+        }
+
+        #endregion
+
+        #region Displaying Methods
+
+        public void PreOrderTraversal(Index SearchIndex)
+        {
+            for (int i = 0; i < SearchIndex.IndexList.Count; i++)
+            {
+                //Add Next String
+                PreOrder.Add(SearchIndex.IndexList[i].ToString());
+
+                //Add to Index Stack
+                PreOrderStack.Push(SearchIndex.IndexList[i]);
+
+                //Step down to sub tree
+                PreOrderTraversal(SearchIndex.IndexList[i]);
+            }
+        }
+
+        public List<string> DisplayTree()
+        {
+            //Clear PreOrder
+            PreOrder.Clear();
+            
+            //Start PreOrder at Root
+            PreOrder.Add(Root.ToString());
+            PreOrderStack.Push(Root);
+            PreOrderTraversal(Root);
+
+            //Return List of index strings
+            return PreOrder;
+        }
+
+        public string Stats()
+        {
+            string stats = "";
+            return stats;
+        }
+
         #endregion
 
         //Need Display Method
         //...Search For Node method(Base off FindLeaf Method)
         //...Need Stats Method
         //...Need to implement counts
-        
+
         //Idea for display: put tree sideways
         //       Root
         //Level: 0          1           2           3

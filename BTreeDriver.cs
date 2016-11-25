@@ -42,6 +42,19 @@ namespace Project5
                 }
                 getNextValue = false;
             }
+
+            WriteLine("Enter node to display");
+            string nodeStr = ReadLine();
+            try
+            {
+                int node = int.Parse(nodeStr);
+                userTree.FindNode(node);
+                WriteLine  
+            }
+            catch (Exception)
+            {
+                //Messed up
+            }
         }
 
         #region Console Edit

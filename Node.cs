@@ -54,7 +54,7 @@ namespace Project5
         {
             string result = "";
             result += $"Node Size: {Items.Count} out of {NodeSize}\n" + 
-                      $"Item List:\n";
+                      $"Item List:\n\t";
             for (int i = 0; i < Items.Count; i++)
             {
                 result += $"{Items[i]} ";
